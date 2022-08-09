@@ -1,6 +1,6 @@
 import xlsxwriter
 
-from Project.main import array
+from parser import array
 
 #Импортируем библиотеку по работе с Excel
 
@@ -22,6 +22,8 @@ def writer(parametr):
     page.set_column('D:D', 50)
     page.set_column('E:E', 50)
     page.set_column('F:F', 50)
+    page.set_column('G:G', 50)
+    page.set_column('H:H', 50)
 
 
     for item in parametr:
@@ -33,6 +35,8 @@ def writer(parametr):
         page.write(row, column + 3, item[3])
         page.write(row, column + 4, item[4])
         page.write(row, column + 5, item[5])
+        page.write(row, column + 6, item[6])
+        page.write(row, column + 7, item[7])
         row += 1
     book.close()
 
