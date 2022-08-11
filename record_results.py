@@ -1,4 +1,4 @@
-import openpyexcel
+from pprint import pprint
 import openpyxl as openpyxl
 
 
@@ -12,16 +12,4 @@ def create_post(array):
         sheet.cell(row=row, column=1)
         sheet.append(i)
         book.save('Banki.ru.xlsx')
-
-def is_post_exists(array):
-    book = openpyxl.load_workbook('banki.xlsx')
-
-    sheet = book.active
-
-    row = 1
-    while True:
-        url = sheet.cell(row=row, column=1).value
-        if url is None:
-            return False
-        if str(url) == str(url):
-            return True
+    pprint('Запись завершена')
