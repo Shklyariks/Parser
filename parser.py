@@ -1,15 +1,9 @@
 import openpyxl
 import requests
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
 from time import sleep
 import re
 
-
-
-ua = UserAgent()
-# headers = {'User-Agent': ua.random}
-'''print(ua.chrome)'''
 headers = {'UserAgent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) '
                         'Chrome/41.0.2228.0 Safari/537.36'}
 
@@ -44,12 +38,15 @@ def array():
 
         book = openpyxl.load_workbook('Banki.ru.xlsx')
         sheet = book.active.values
+        allredyin = []
 
         for i in sheet:
             if str(i[0]) == card_url:
-                print(i[0])
-                print('Данные уже были записаны')
+                allredyin.append(i[0])
+                #print(i[0])
+                #print('Данные уже были записаны')
                 break
+            print(f'{len(allredyin)} элементов уже записаны')
         else:
             response = requests.get(card_url, headers=headers)
             sleep(3)

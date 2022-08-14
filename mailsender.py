@@ -1,19 +1,21 @@
 import smtplib
-
+import datetime
 import openpyxl
-
+from passwords import password_mail
+from email.mime.text import MIMEText
 
 def send_mail(message):
     sender = 'Shklyarik.s.a@inbox.ru'
-    # password = 'razuEw'
-    password = 'QuYBVhAmz1AcRXfCcaCi'
+    password = password_mail
 
     server = smtplib.SMTP('smtp.mail.ru', 587)
     server.starttls()
 
     try:
         server.login(sender, password)
-        server.sendmail(sender, 'Shklyarik.s.a@gmail.com', message)
+        msg = MIMEText(message)
+        msg['Subject'] = 'New update'
+        server.sendmail(sender, 'Shklyarik.s.a@gmail.com', msg.as_string())
         return print('Sended')
     except Exception as ex:
         return f'{ex} ERROR'
@@ -22,10 +24,12 @@ def report():
     book = openpyxl.load_workbook('Banki.ru.xlsx')
     sheet = book.active.values
     message_list = []
+    past = datetime.datetime.now() - datetime.timedelta(days=7)
+
     for i in sheet:
-        if i[3] == '05.08.2022':
-            message_list.append(i)
-        print(message_list)
-    message = ' '.join(message_list)
-    return message
-send_mail(report())
+        date = datetime.datetime.strptime(i[3], ' %d.%m.%Y %H:%M')
+        if date >= past:
+            message_list.append(i[0])
+
+    return ' '.join(message_list)
+
