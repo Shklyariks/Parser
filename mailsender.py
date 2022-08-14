@@ -20,16 +20,4 @@ def send_mail(message):
     except Exception as ex:
         return f'{ex} ERROR'
 
-def report():
-    book = openpyxl.load_workbook('Banki.ru.xlsx')
-    sheet = book.active.values
-    message_list = []
-    past = datetime.datetime.now() - datetime.timedelta(days=7)
-
-    for i in sheet:
-        date = datetime.datetime.strptime(i[3], ' %d.%m.%Y %H:%M')
-        if date >= past:
-            message_list.append(i[0])
-
-    return ' '.join(message_list)
 
